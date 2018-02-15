@@ -14,11 +14,16 @@ class APTScraper
   def get_listingsCSV
     names = @parsed_page.css('.result-row').css('.result-info').css('.result-title').css('.hdrlnk').map{|x| x.text}
     links = @parsed_page.css('.content').css('.rows').css('.result-row').css('.result-info a').map{|l| l['href'] if l['href'].length>1}.reject{|w| w == nil}
-      listings = Hash.new
-      names.length.times do |i|
-        listings[i+1] = {'name' => names[i], 'link' => links[i]}
+      # listings = Hash.new
+      # names.length.times do |i|
+      #   listings[i+1] = {'name' => names[i], 'link' => links[i]}
+      # end
+      CSV.open("listings.csv", "wb") do |csv|
+        csv << ['entry', 'listing', 'url']
+        names.length.times do |i|
+          csv << [i+1,names[i],links[i]]
+        end
       end
-      CSV.open("listings.csv", "wb") {|csv| listings.to_a.each {|apt| csv << apt} }
   end
 end
 
