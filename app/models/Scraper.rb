@@ -16,10 +16,9 @@ links = parsed_page.css('.content').css('.rows').css('.result-row').css('.result
 
 listings = Hash.new
 names.length.times do |i|
-  listings[i+1] = {'name' => name[i]}
+  listings[i+1] = {'name' => names[i], 'link' => links[i]}
 end
 
-# CSV.open('apt.csv', 'w') do |csv|
-#   csv << names
-# end
-Pry.start(binding)
+CSV.open("data.csv", "wb") {|csv| listings.to_a.each {|elem| csv << elem} }
+
+# Pry.start(binding)
