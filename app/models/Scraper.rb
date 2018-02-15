@@ -19,6 +19,6 @@ names.length.times do |i|
   listings[i+1] = {'name' => names[i], 'link' => links[i]}
 end
 
-CSV.open("data.csv", "wb") {|csv| listings.to_a.each {|elem| csv << elem} }
+CSV.open("listings.csv", "wb") {|csv| listings.to_a.each {|apt| csv << apt} }
 
 # Pry.start(binding)
