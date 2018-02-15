@@ -6,8 +6,8 @@ require 'JSON'
 require 'csv'
 
 class APTScraper
-  def initialize(link)
-    @page = HTTParty.get(link)
+  def initialize(city)
+    @page = HTTParty.get("https://#{city}.craigslist.org/search/apa?min_bedrooms=3&max_bedrooms=2&availabilityMode=0&sale_date=all+dates")
     @parsed_page = Nokogiri::HTML(@page)
   end
 
@@ -22,9 +22,7 @@ class APTScraper
       end
   end
 end
-
-myLink = 'https://miami.craigslist.org/search/apa?min_bedrooms=3&max_bedrooms=2&availabilityMode=0&sale_date=all+dates'
-s = APTScraper.new(myLink)
+s = APTScraper.new('miami')
 s.get_listingsCSV
 
 # Pry.start(binding)
